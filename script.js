@@ -20,11 +20,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     //nav
+    const navbar = document.querySelector('.navbar');
     const container = document.querySelector('.nav-container');
     const items = document.querySelectorAll('.nav-item');
     const toggleButton = document.querySelector('.toggle-button');
     const toggleText = document.querySelector('.toggle-text');
     const toggleIcon = document.querySelector('.toggle-icon');
+
+    let lastScroll = 0;
+    const scrollThreshold = 10;
+
+    // Handle scroll
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (Math.abs(currentScroll - lastScroll) < scrollThreshold) return;
+        
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            navbar.classList.add('hidden');
+        } else {
+            navbar.classList.remove('hidden');
+        }
+        
+        lastScroll = currentScroll;
+    });
 
     // Toggle collapse/expand
     toggleButton.addEventListener('click', () => {
@@ -58,6 +77,33 @@ document.addEventListener('DOMContentLoaded', () => {
             translateZ(0px)
         `;
     });
+
+    // Individual item hover effect
+    items.forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = item.getBoundingClientRect();
+            const x = (e.clientX - left) / width - 0.5;
+            const y = (e.clientY - top) / height - 0.5;
+
+            item.style.transform = `
+                translateZ(30px)
+                rotateX(${y * 20}deg)
+                rotateY(${x * 20}deg)
+            `;
+        });
+
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateZ(0px) rotateX(0deg) rotateY(0deg)';
+        });
+    });
+
+    // container.addEventListener('mouseleave', () => {
+    //     container.style.transform = `
+    //         rotateX(0deg)
+    //         rotateY(0deg)
+    //         translateZ(0px)
+    //     `;
+    // });
 
     // Individual item hover effect
     items.forEach(item => {
