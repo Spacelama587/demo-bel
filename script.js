@@ -110,13 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // container.addEventListener('mouseleave', () => {
-    //     container.style.transform = `
-    //         rotateX(0deg)
-    //         rotateY(0deg)
-    //         translateZ(0px)
-    //     `;
-    // });
+    container.addEventListener('mouseleave', () => {
+        container.style.transform = `
+            rotateX(0deg)
+            rotateY(0deg)
+            translateZ(0px)
+        `;
+    });
 
     // Individual item hover effect
     items.forEach(item => {
